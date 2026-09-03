@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-RAG Customer Support Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">RAG demo</p>
+          <h1>Customer Support Chatbot</h1>
+        </div>
+        <div class="status-pill">Flask Backend</div>
+      </header>
+
+      <main class="layout">
+        <aside class="panel sidebar">
+          <h2>Choose RAG model</h2>
+          <select id="ragModel">
+            {% for model in models %}
+              <option value="{{ model }}">{{ model }}</option>
+            {% endfor %}
+          </select>
+
+          <div class="example-list">
+            <h3>Example prompts</h3>
+            <button class="prompt-btn" data-prompt="I forgot my password and the reset link is expired.">Reset password issue</button>
+            <button class="prompt-btn" data-prompt="My card was declined when renewing my premium plan.">Payment failed</button>
+            <button class="prompt-btn" data-prompt="My order is delayed and the tracking hasn't moved for 9 days.">Shipping delay</button>
+            <button class="prompt-btn" data-prompt="I need to return a damaged coffee machine and want a refund.">Return request</button>
+            <button class="prompt-btn" data-prompt="I want to upgrade from Pro to Premium for my team.">Subscription upgrade</button>
+            <button class="prompt-btn" data-prompt="I need help with enterprise onboarding for 300 employees.">Business inquiry</button>
+          </div>
+        </aside>
+
+        <section class="panel chat-panel">
+          <div id="chatWindow" class="chat-window">
+            <div class="message assistant">
+              <strong>Assistant:</strong>
+              <span>Choose a RAG model and ask a customer support question.</span>
+            </div>
+          </div>
+
+          <form id="chatForm" class="chat-form">
+            <textarea id="userInput" rows="4" placeholder="Type your customer support question here..."></textarea>
+            <div class="form-actions">
+              <button type="submit">Send</button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

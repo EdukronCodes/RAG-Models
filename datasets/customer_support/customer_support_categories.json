@@ -1,0 +1,76 @@
+{
+  "dataset_name": "customer_support_categories",
+  "description": "Category-level structure and definitions for supporting classification and routing.",
+  "categories": [
+    {
+      "category": "account_access",
+      "description": "Issues involving login, account security, password access, or locked profiles.",
+      "common_intents": ["password_reset", "account_verification", "account_access"]
+    },
+    {
+      "category": "billing_and_payments",
+      "description": "Problems involving charges, invoices, payment failures, or card authorization issues.",
+      "common_intents": ["billing_issue", "invoice_request", "payment_failed"]
+    },
+    {
+      "category": "shipping_and_delivery",
+      "description": "Orders, tracking, route delays, and address changes while a shipment is in progress.",
+      "common_intents": ["order_tracking", "delivery_address_change", "shipping_delay"]
+    },
+    {
+      "category": "returns_and_exchanges",
+      "description": "Any request related to returns, replacements, or exchanges of purchased products.",
+      "common_intents": ["return_request", "exchange_request", "refund_request"]
+    },
+    {
+      "category": "product_information",
+      "description": "Questions about product capabilities, compatibility, pricing, or available features.",
+      "common_intents": ["product_question", "availability_question"]
+    },
+    {
+      "category": "technical_support",
+      "description": "Issues with software, app crashes, device setup, or installation problems.",
+      "common_intents": ["technical_issue", "setup_help"]
+    },
+    {
+      "category": "subscription_management",
+      "description": "Subscription upgrades, plan changes, cancellations, or billing schedule adjustments.",
+      "common_intents": ["subscription_upgrade", "subscription_cancel", "plan_change"]
+    },
+    {
+      "category": "security_and_privacy",
+      "description": "Requests related to account security, data retention, privacy policy, and account deletion.",
+      "common_intents": ["account_verification", "data_privacy", "policy_question"]
+    },
+    {
+      "category": "complaints_and_escalation",
+      "description": "Formal complaints, unresolved support issues, or requests for manager intervention.",
+      "common_intents": ["complaint", "escalation"]
+    },
+    {
+      "category": "business_and_enterprise",
+      "description": "Corporate accounts, onboarding, custom proposals, and enterprise integrations.",
+      "common_intents": ["business_inquiry", "appointment_booking", "plan_change"]
+    },
+    {
+      "category": "warranty_and_repairs",
+      "description": "Coverage, repair eligibility, claim status, and replacement under a guarantee.",
+      "common_intents": ["warranty_claim", "technical_issue"]
+    },
+    {
+      "category": "feedback_and_reviews",
+      "description": "Customer feedback, suggestions, and testimonials about product or service quality.",
+      "common_intents": ["feedback", "greeting"]
+    },
+    {
+      "category": "appointment_booking",
+      "description": "Appointments for onboarding, training, or setup assistance.",
+      "common_intents": ["appointment_booking"]
+    },
+    {
+      "category": "policy_and_compliance",
+      "description": "Rules, policies, compliance, and legal/regulatory questions.",
+      "common_intents": ["policy_question", "data_privacy"]
+    }
+  ]
+}

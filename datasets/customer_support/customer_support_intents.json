@@ -1,0 +1,33 @@
+{
+  "dataset_name": "customer_support_intents",
+  "description": "Intent taxonomy and examples for conversational support classification.",
+  "intents": [
+    { "intent": "greeting", "description": "Customer initiates contact or asks for help in a general way.", "examples": ["hi", "hello", "I need help"] },
+    { "intent": "account_access", "description": "Customer has trouble logging in or accessing the account.", "examples": ["cannot login", "account locked", "no access"] },
+    { "intent": "password_reset", "description": "Customer requests or needs password reset help.", "examples": ["reset password", "forgot password", "login link expired"] },
+    { "intent": "order_tracking", "description": "Customer asks where an order or shipment is.", "examples": ["track my order", "where is my package", "shipping status"] },
+    { "intent": "billing_issue", "description": "Customer reports a billing irregularity or invoice problem.", "examples": ["duplicate charge", "billing error", "incorrect invoice"] },
+    { "intent": "invoice_request", "description": "Customer asks for a receipt or billing statement.", "examples": ["send invoice", "billing breakdown", "payment receipt"] },
+    { "intent": "payment_failed", "description": "Customer reports a failed transaction or payment decline.", "examples": ["card declined", "payment failed", "transaction not authorized"] },
+    { "intent": "refund_request", "description": "Customer requests reimbursement or refund.", "examples": ["refund me", "reimburse", "partial refund"] },
+    { "intent": "return_request", "description": "Customer wants to return an item.", "examples": ["return my item", "damaged product", "send return label"] },
+    { "intent": "exchange_request", "description": "Customer requests replacing an item with another size or item.", "examples": ["exchange", "wrong size", "replace item"] },
+    { "intent": "product_question", "description": "Customer wants product information or specs.", "examples": ["what are the specs", "battery life", "features"] },
+    { "intent": "technical_issue", "description": "Customer reports a system or app malfunction.", "examples": ["bug", "crashing", "application error"] },
+    { "intent": "setup_help", "description": "Customer needs device or app setup guidance.", "examples": ["setup help", "installation", "connect device"] },
+    { "intent": "subscription_upgrade", "description": "Customer wants to upgrade plan or service level.", "examples": ["upgrade plan", "switch to premium", "increase seats"] },
+    { "intent": "subscription_cancel", "description": "Customer wants to cancel a plan or service.", "examples": ["cancel plan", "end subscription", "stop renewal"] },
+    { "intent": "plan_change", "description": "Customer wants to change one plan to another or adjust features.", "examples": ["change plan", "switch package", "analyze pricing"] },
+    { "intent": "account_verification", "description": "Customer needs account validation or security checks.", "examples": ["verify account", "identity check", "unlock account"] },
+    { "intent": "data_privacy", "description": "Customer asks about privacy, deletion, or data usage.", "examples": ["delete my data", "privacy policy", "how is my data stored"] },
+    { "intent": "complaint", "description": "Customer files a complaint about service or fulfillment.", "examples": ["poor service", "bad experience", "not resolved"] },
+    { "intent": "escalation", "description": "Customer asks for manager or supervisor intervention.", "examples": ["need supervisor", "escalate", "manager review"] },
+    { "intent": "policy_question", "description": "Customer asks about support or service policy details.", "examples": ["what are your policies", "return policy", "terms and conditions"] },
+    { "intent": "delivery_address_change", "description": "Customer wants to change the shipping destination.", "examples": ["change address", "reroute shipment", "send to office"] },
+    { "intent": "warranty_claim", "description": "Customer files a warranty request or asks if covered.", "examples": ["warranty", "repair claim", "repair under warranty"] },
+    { "intent": "availability_question", "description": "Customer asks if an item is in stock or ready to ship.", "examples": ["in stock", "available now", "ship date"] },
+    { "intent": "feedback", "description": "Customer gives praise or criticism about the service.", "examples": ["thanks", "great experience", "service review"] },
+    { "intent": "appointment_booking", "description": "Customer wants to schedule a support or onboarding call.", "examples": ["book appointment", "setup call", "schedule a meeting"] },
+    { "intent": "business_inquiry", "description": "Customer is asking for enterprise or business account support.", "examples": ["business account", "enterprise pricing", "custom onboarding"] }
+  ]
+}

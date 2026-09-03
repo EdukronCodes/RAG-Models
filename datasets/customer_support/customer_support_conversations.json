@@ -1,0 +1,76 @@
+{
+  "dataset_name": "customer_support_conversations",
+  "description": "Conversation-level support records with user and agent messages, intent labels, resolution states, and metadata.",
+  "conversations": [
+    {
+      "conversation_id": "CS-2001",
+      "category": "account_access",
+      "intent": "password_reset",
+      "customer_id": "CUST-1001",
+      "country": "US",
+      "channel": "chat",
+      "priority": "high",
+      "sentiment": "frustrated",
+      "resolution_status": "resolved",
+      "messages": [
+        { "role": "user", "text": "I can't sign in because it says my password is invalid after I reset it yesterday." },
+        { "role": "agent", "text": "I’m sorry about that. I can help. Please confirm the email address tied to the account and whether the reset email was expired or rejected." },
+        { "role": "user", "text": "It is alex.morris@example.com and the link is invalid." },
+        { "role": "agent", "text": "Thank you. I’ve identified that the previous reset token had expired and there was an old request still active. I’ve reset the account access state and triggered a new verification email." },
+        { "role": "user", "text": "Will this work now?" },
+        { "role": "agent", "text": "Yes. Please use the newest message and create a fresh password. If it still fails, reply with the exact error message and I’ll continue troubleshooting." }
+      ]
+    },
+    {
+      "conversation_id": "CS-2002",
+      "category": "billing_and_payments",
+      "intent": "payment_failed",
+      "customer_id": "CUST-1002",
+      "country": "UK",
+      "channel": "chat",
+      "priority": "high",
+      "sentiment": "angry",
+      "resolution_status": "pending",
+      "messages": [
+        { "role": "user", "text": "My premium plan renewed today and my card was declined. I need a fix urgently." },
+        { "role": "agent", "text": "I’m sorry for the interruption. I can help review the payment issue. Can you tell me whether the bank rejected the transaction or if the gateway returned a specific error?" },
+        { "role": "user", "text": "The bank says there was no charge, and the payment page says transaction not authorized." },
+        { "role": "agent", "text": "That usually indicates a card issuer block rather than a failure in our system. I’ve noted your billing plan and I can extend your service temporarily while you contact the bank or try a secondary card." }
+      ]
+    },
+    {
+      "conversation_id": "CS-2003",
+      "category": "shipping_and_delivery",
+      "intent": "order_tracking",
+      "customer_id": "CUST-1003",
+      "country": "CA",
+      "channel": "email",
+      "priority": "medium",
+      "sentiment": "concerned",
+      "resolution_status": "resolved",
+      "messages": [
+        { "role": "user", "text": "My order ORD-44518 has not moved for nine days. Can you please check the shipment details and tell me what happened?" },
+        { "role": "agent", "text": "I checked your shipment. It was delayed by a weather-related route issue at the regional hub. The carrier has since rerouted it and the expected delivery date is tomorrow. I can also add a courtesy credit if you prefer." },
+        { "role": "user", "text": "Please add the credit since the delay is outside of the expected window." },
+        { "role": "agent", "text": "Done. I have added a $15 account credit and sent the updated tracking information to your email." }
+      ]
+    },
+    {
+      "conversation_id": "CS-2004",
+      "category": "product_information",
+      "intent": "product_question",
+      "customer_id": "CUST-1004",
+      "country": "AU",
+      "channel": "chat",
+      "priority": "low",
+      "sentiment": "neutral",
+      "resolution_status": "resolved",
+      "messages": [
+        { "role": "user", "text": "Does the Smart Speaker Mini support pairing with Android phones and laptops?" },
+        { "role": "agent", "text": "Yes. It supports Bluetooth 5.3 and works with compatible Android, Windows, and iOS devices. It also supports Wi-Fi setup through the companion app." },
+        { "role": "user", "text": "Do I need a paid subscription to use voice commands?" },
+        { "role": "agent", "text": "No. The core assistant features are included without a subscription. Premium features such as music streaming and advanced automations are optional." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "dataset_name": "customer_support_faq",
+  "description": "Frequently asked questions and answer pairs covering the most common support use cases.",
+  "faqs": [
+    {
+      "faq_id": "FAQ-001",
+      "category": "account_access",
+      "question": "How do I reset my password?",
+      "answer": "Use the Forgot password link on the login screen, then enter the email address tied to the account and follow the reset instructions. If you do not see the email within 10 minutes, check spam or ensure the account email is active.",
+      "tags": ["login", "password", "security"]
+    },
+    {
+      "faq_id": "FAQ-002",
+      "category": "shipping_and_delivery",
+      "question": "How can I track my order?",
+      "answer": "Open the order details page in your account or use the shipping confirmation link sent by email. You can also contact support with the order number and we can provide the current carrier status.",
+      "tags": ["tracking", "order", "delivery"]
+    },
+    {
+      "faq_id": "FAQ-003",
+      "category": "billing_and_payments",
+      "question": "Why was my card declined?",
+      "answer": "This can happen if the card has insufficient funds, a temporary issuer block, or mismatched billing information. Please ensure the billing ZIP code matches the card on file and contact your bank if needed.",
+      "tags": ["payment", "card", "decline"]
+    },
+    {
+      "faq_id": "FAQ-004",
+      "category": "refunds_and_chargebacks",
+      "question": "When will my refund appear?",
+      "answer": "Refunds are generally processed within 5 to 10 business days after approval. The exact timeline depends on the original payment provider and the financial institution.",
+      "tags": ["refund", "payment", "finance"]
+    },
+    {
+      "faq_id": "FAQ-005",
+      "category": "returns_and_exchanges",
+      "question": "What is your return policy?",
+      "answer": "Most unopened products can be returned within 30 days. Some categories such as consumables, customized items, and digital subscriptions may have exceptions or shorter policies.",
+      "tags": ["policy", "returns", "exchange"]
+    },
+    {
+      "faq_id": "FAQ-006",
+      "category": "subscription_management",
+      "question": "Can I cancel my subscription at any time?",
+      "answer": "Yes. Most subscriptions can be canceled at any time, and the cancellation takes effect at the end of the current billing cycle unless a prorated refund is available under your plan terms.",
+      "tags": ["subscription", "cancel", "plan"]
+    },
+    {
+      "faq_id": "FAQ-007",
+      "category": "security_and_privacy",
+      "question": "How do I request a copy of my data or delete my account?",
+      "answer": "Open the Privacy Center or account settings page and choose the request type you need. Data access and account deletion requests are reviewed according to legal retention requirements and service obligations.",
+      "tags": ["privacy", "GDPR", "security"]
+    },
+    {
+      "faq_id": "FAQ-008",
+      "category": "business_and_enterprise",
+      "question": "Do you support enterprise onboarding?",
+      "answer": "Yes. Enterprise customers can receive onboarding help, custom implementation planning, and guidance for integrations and pilot programs.",
+      "tags": ["enterprise", "business", "onboarding"]
+    },
+    {
+      "faq_id": "FAQ-009",
+      "category": "technical_support",
+      "question": "What should I do if the app is crashing?",
+      "answer": "First confirm the app is updated to the latest version and restart the device. If the crash continues, remove and reinstall the application or contact support with the device model and app version.",
+      "tags": ["app", "bug", "crash"]
+    },
+    {
+      "faq_id": "FAQ-010",
+      "category": "warranty_and_repairs",
+      "question": "How do I claim warranty service?",
+      "answer": "Use the warranty portal, or contact support with your order number and purchase date. We will confirm coverage and provide a prepaid label or service instruction if the claim is approved.",
+      "tags": ["warranty", "repair", "claim"]
+    }
+  ]
+}

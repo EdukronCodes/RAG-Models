@@ -1,0 +1,781 @@
+{
+  "dataset_name": "customer_support_chatbot_exhaustive",
+  "version": "1.0.0",
+  "language": "en-US",
+  "description": "Synthetic but realistic customer support dataset designed for intent classification, FAQ retrieval, conversational QA, and agent response generation.",
+  "source": "synthetic",
+  "schema_version": "1.0",
+  "intent_catalog": [
+    "greeting",
+    "farewell",
+    "account_access",
+    "password_reset",
+    "order_tracking",
+    "order_cancellation",
+    "billing_issue",
+    "invoice_request",
+    "refund_request",
+    "payment_failed",
+    "shipping_delay",
+    "return_request",
+    "exchange_request",
+    "product_question",
+    "technical_issue",
+    "setup_help",
+    "subscription_upgrade",
+    "subscription_cancel",
+    "plan_change",
+    "account_verification",
+    "data_privacy",
+    "complaint",
+    "escalation",
+    "policy_question",
+    "delivery_address_change",
+    "warranty_claim",
+    "availability_question",
+    "feedback",
+    "appointment_booking",
+    "business_inquiry"
+  ],
+  "entity_schema": [
+    { "name": "product", "type": "string", "examples": ["Laptop Pro 14", "Smart Speaker Mini", "Cloud Essentials Plan"] },
+    { "name": "order_id", "type": "string", "examples": ["ORD-10234", "A12-9987", "SO-7781"] },
+    { "name": "account_id", "type": "string", "examples": ["ACCT-4468", "user_leyla", "customer-204"] },
+    { "name": "amount", "type": "number", "examples": ["49.99", "129.00", "19.90"] },
+    { "name": "date", "type": "date", "examples": ["2026-08-11", "tomorrow", "next Friday"] },
+    { "name": "email", "type": "string", "examples": ["alex@example.com", "sara@company.co"] },
+    { "name": "phone", "type": "string", "examples": ["+1 415 555 0110", "+44 20 7946 0958"] },
+    { "name": "shipping_provider", "type": "string", "examples": ["DHL", "UPS", "FedEx"] },
+    { "name": "subscription_plan", "type": "string", "examples": ["Basic", "Pro", "Enterprise"] },
+    { "name": "issue_type", "type": "string", "examples": ["login error", "late delivery", "billing mismatch", "crash"] }
+  ],
+  "faq": [
+    {
+      "faq_id": "FAQ-001",
+      "question": "How do I reset my password?",
+      "answer": "Go to the sign-in page and select 'Forgot password'. Enter your email and follow the reset link sent to your inbox. If the email does not arrive within 10 minutes, check spam or contact support.",
+      "category": "account_access"
+    },
+    {
+      "faq_id": "FAQ-002",
+      "question": "Where is my order?",
+      "answer": "You can track your order using the tracking link in your shipment email or by checking the order details in your account. If the status remains 'in transit' for more than 5 business days, contact support.",
+      "category": "order_tracking"
+    },
+    {
+      "faq_id": "FAQ-003",
+      "question": "How do I request a refund?",
+      "answer": "Refunds are processed within 5-10 business days after approval. Eligible items can be returned via the returns portal. Certain items, including open software subscriptions, are excluded.",
+      "category": "refund_request"
+    },
+    {
+      "faq_id": "FAQ-004",
+      "question": "Can I cancel my subscription anytime?",
+      "answer": "Yes. You can cancel your subscription from the billing section in your account. Cancellation takes effect at the end of the current billing cycle unless a prorated refund applies.",
+      "category": "subscription_cancel"
+    },
+    {
+      "faq_id": "FAQ-005",
+      "question": "What is your return policy?",
+      "answer": "Most unopened products can be returned within 30 days. Used or personalized items can only be returned if damaged or defective. Return shipping is free for domestic orders over $50.",
+      "category": "return_request"
+    },
+    {
+      "faq_id": "FAQ-006",
+      "question": "Do you offer support for business accounts?",
+      "answer": "Yes. Business customers can contact our enterprise support team for onboarding, volume discounts, and custom implementation help.",
+      "category": "business_inquiry"
+    }
+  ],
+  "conversations": [
+    {
+      "conversation_id": "CS-1001",
+      "customer": {
+        "customer_id": "CUST-1001",
+        "segment": "new_customer",
+        "country": "US"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "account_access",
+      "intent": "password_reset",
+      "sentiment": "frustrated",
+      "tags": ["login", "email", "password"],
+      "messages": [
+        { "role": "user", "text": "I can't log in. It says my password is wrong even though I reset it yesterday." },
+        { "role": "agent", "text": "I’m sorry about that. I can help you troubleshoot. Can you confirm the email address on your account and whether you are using the latest reset link?" },
+        { "role": "user", "text": "It's alex.morris@example.com. I used the reset link but it still says invalid or expired." },
+        { "role": "agent", "text": "Thanks, Alex. I’ve checked the recent reset requests and there was a stale token from an older attempt. I’ve cleared it and you can request a new reset link now. I’ve also enabled a temporary account verification to prevent unauthorized access." },
+        { "role": "user", "text": "Okay, I’ll try again. Is there anything else I should do?" },
+        { "role": "agent", "text": "Please use the new email within the next 10 minutes, and if the issue persists, reply with the exact error message and I’ll continue from there." },
+        { "role": "user", "text": "That worked. Thanks!" },
+        { "role": "agent", "text": "You’re welcome. I’m glad it’s resolved. Let me know if you need help with anything else." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Reset token issue resolved and user regained access.",
+        "next_action": "No further action required."
+      }
+    },
+    {
+      "conversation_id": "CS-1002",
+      "customer": {
+        "customer_id": "CUST-1002",
+        "segment": "returning_customer",
+        "country": "UK"
+      },
+      "channel": "chat",
+      "priority": "high",
+      "category": "billing",
+      "intent": "billing_issue",
+      "sentiment": "angry",
+      "tags": ["invoice", "charge", "payment"],
+      "messages": [
+        { "role": "user", "text": "I was charged twice for the same monthly plan. This is unacceptable." },
+        { "role": "agent", "text": "I’m sorry for the duplicate charge. I can review this for you right away. Please share the email linked to the account or the invoice number." },
+        { "role": "user", "text": "The email is sarah@northwind.co and the charge was on 2026-08-24." },
+        { "role": "agent", "text": "Thank you. I’ve found two charges on your account: one for the renewal on August 24 and one for a failed retry that was reprocessed. I’m filing a refund for the duplicate payment and you should receive it in 5-7 business days." },
+        { "role": "user", "text": "How can you be sure it was a duplicate?" },
+        { "role": "agent", "text": "The system shows both entries were applied to the same invoice cycle and there was no corresponding service upgrade or reactivation. I’ve escalated the case to our billing team for audit and I’ve noted that you should not be charged again this month." },
+        { "role": "user", "text": "Okay, thank you. Please keep me updated." },
+        { "role": "agent", "text": "Absolutely. I’ve documented everything and you’ll receive a confirmation email with the refund timeline." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Duplicate billing charge refunded and billing audit logged.",
+        "next_action": "Customer to receive refund confirmation email."
+      }
+    },
+    {
+      "conversation_id": "CS-1003",
+      "customer": {
+        "customer_id": "CUST-1003",
+        "segment": "business_customer",
+        "country": "CA"
+      },
+      "channel": "email",
+      "priority": "medium",
+      "category": "shipping",
+      "intent": "shipping_delay",
+      "sentiment": "concerned",
+      "tags": ["delivery", "tracking", "warehouse"],
+      "messages": [
+        { "role": "user", "text": "My order ORD-44518 has been stuck in transit for 9 days. Can you tell me why?" },
+        { "role": "agent", "text": "I’m sorry for the delay. I can look into the shipment with you. I see it was transferred from the local hub to a regional facility due to a weather-related route issue, and it has since been re-routed for delivery. The expected arrival is tomorrow." },
+        { "role": "user", "text": "Could you confirm whether a refund or partial credit is available?" },
+        { "role": "agent", "text": "Because the package is still en route and the delay was due to a carrier issue, I can offer a $15 account credit once the shipment is delivered. I can also add a delivery alert service at no additional cost." },
+        { "role": "user", "text": "That would be helpful. Please proceed." },
+        { "role": "agent", "text": "Done. I’ve recorded the credit and sent updated tracking information to your email." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Delivery delay due to carrier issue; account credit applied.",
+        "next_action": "Monitor delivery and confirm credit posting."
+      }
+    },
+    {
+      "conversation_id": "CS-1004",
+      "customer": {
+        "customer_id": "CUST-1004",
+        "segment": "new_customer",
+        "country": "AU"
+      },
+      "channel": "chat",
+      "priority": "low",
+      "category": "product_question",
+      "intent": "product_question",
+      "sentiment": "neutral",
+      "tags": ["compatibility", "specs", "device"],
+      "messages": [
+        { "role": "user", "text": "Does the Smart Speaker Mini support Bluetooth pairing with non-Apple devices?" },
+        { "role": "agent", "text": "Yes. The Smart Speaker Mini supports Bluetooth 5.3 and works with Android, Windows, and iOS devices for streaming and audio pairing. It also supports Wi-Fi setup through the companion app." },
+        { "role": "user", "text": "Great. Does it need a subscription to use voice commands?" },
+        { "role": "agent", "text": "No subscription is required for the core voice assistant features. Advanced subscriptions are optional for premium music, voice history, and smart-home automations." },
+        { "role": "user", "text": "Perfect. I think I’m ready to buy it." },
+        { "role": "agent", "text": "I’m happy to help. You can also compare plans in the app if you want to add premium features later." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Customer had product compatibility and subscription questions answered.",
+        "next_action": "None."
+      }
+    },
+    {
+      "conversation_id": "CS-1005",
+      "customer": {
+        "customer_id": "CUST-1005",
+        "segment": "returning_customer",
+        "country": "DE"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "return_request",
+      "intent": "return_request",
+      "sentiment": "neutral",
+      "tags": ["return", "defective", "refund"],
+      "messages": [
+        { "role": "user", "text": "I received a damaged coffee machine and need a return." },
+        { "role": "agent", "text": "I’m sorry to hear that. I can help with a return. Please send a photo of the damage and confirm the order number." },
+        { "role": "user", "text": "Order is ORD-98710. Here is the photo." },
+        { "role": "agent", "text": "Thank you. Since the item arrived damaged, we’ll issue a prepaid return label and process a full refund once it is received back. The refund should appear within 5-7 business days after inspection." },
+        { "role": "user", "text": "Do I need to package it in the original box?" },
+        { "role": "agent", "text": "Original packaging is preferred, but if the item is protected and taped securely, it is acceptable. The label has been emailed to you and includes pickup instructions." },
+        { "role": "user", "text": "Great. Thank you." },
+        { "role": "agent", "text": "You’re welcome. I’ve noted the case and your refund will be tracked in the confirmation email." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Damaged item return approved with prepaid label and full refund.",
+        "next_action": "Customer to ship package and await refund confirmation."
+      }
+    },
+    {
+      "conversation_id": "CS-1006",
+      "customer": {
+        "customer_id": "CUST-1006",
+        "segment": "new_customer",
+        "country": "US"
+      },
+      "channel": "chat",
+      "priority": "low",
+      "category": "setup_help",
+      "intent": "setup_help",
+      "sentiment": "confused",
+      "tags": ["installation", "app", "smart_home"],
+      "messages": [
+        { "role": "user", "text": "I just set up my thermostat but the app keeps saying the device is offline." },
+        { "role": "agent", "text": "Thanks for telling me. I can help. First, make sure the thermostat is connected to the same Wi‑Fi network as your phone. Have you installed the latest app version?" },
+        { "role": "user", "text": "Yes, the app is updated and the Wi‑Fi is correct." },
+        { "role": "agent", "text": "Then the next step is to reboot the thermostat and the router. After both are back online, open the app and choose 'Reconnect device.' If it still shows offline, I’ll walk you through a factory reset." },
+        { "role": "user", "text": "That worked. Thank you." },
+        { "role": "agent", "text": "You’re welcome. I’ve noted the troubleshooting steps in case you need to reuse them later." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Setup issue fixed by rebooting router and thermostat.",
+        "next_action": "No further action."
+      }
+    },
+    {
+      "conversation_id": "CS-1007",
+      "customer": {
+        "customer_id": "CUST-1007",
+        "segment": "returning_customer",
+        "country": "FR"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "technical_issue",
+      "intent": "technical_issue",
+      "sentiment": "frustrated",
+      "tags": ["bug", "crash", "app"],
+      "messages": [
+        { "role": "user", "text": "The app crashes every time I open my dashboard." },
+        { "role": "agent", "text": "I’m sorry that’s happening. Let’s narrow it down. What device are you using and what app version is installed?" },
+        { "role": "user", "text": "iPhone 14, app version 4.8.2." },
+        { "role": "agent", "text": "Thanks. I’ve identified a bug that affected version 4.8.2 on iOS 18. I’ve pushed a fix and I need you to update the app from the App Store. If it still crashes after updating, I’ll arrange a manual restart from our side." },
+        { "role": "user", "text": "It works now. Thank you!" },
+        { "role": "agent", "text": "Excellent. I’ve logged the bug and the fix for the next release cycle to prevent this happening again." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "App crash fixed by updating to patched version.",
+        "next_action": "No additional action required."
+      }
+    },
+    {
+      "conversation_id": "CS-1008",
+      "customer": {
+        "customer_id": "CUST-1008",
+        "segment": "business_customer",
+        "country": "US"
+      },
+      "channel": "chat",
+      "priority": "high",
+      "category": "business_inquiry",
+      "intent": "business_inquiry",
+      "sentiment": "neutral",
+      "tags": ["enterprise", "pricing", "integration"],
+      "messages": [
+        { "role": "user", "text": "We need a custom onboarding plan for 300 employees and want to integrate with Microsoft Teams." },
+        { "role": "agent", "text": "That sounds like a good fit for our enterprise plan. I can connect you with a solutions specialist who can review your requirements and provide a tailored quote." },
+        { "role": "user", "text": "Can we do it within two weeks?" },
+        { "role": "agent", "text": "Yes. We can usually complete setup within 10-14 business days depending on your approval timing and integration scope. I can request a callback from the onboarding team today." },
+        { "role": "user", "text": "Please do that. We’re interested in a pilot before full rollout." },
+        { "role": "agent", "text": "Absolutely. I’ve scheduled the enterprise onboarding team to contact you tomorrow with a pilot proposal and pricing options." }
+      ],
+      "resolution": {
+        "status": "pending",
+        "summary": "Business inquiry routed to enterprise onboarding specialist.",
+        "next_action": "Schedule callback and pilot review."
+      }
+    },
+    {
+      "conversation_id": "CS-1009",
+      "customer": {
+        "customer_id": "CUST-1009",
+        "segment": "returning_customer",
+        "country": "JP"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "subscription",
+      "intent": "subscription_upgrade",
+      "sentiment": "interested",
+      "tags": ["plan", "upgrade", "billing"],
+      "messages": [
+        { "role": "user", "text": "I’d like to upgrade from Pro to Premium for my team." },
+        { "role": "agent", "text": "Absolutely. The Premium plan includes advanced reporting, team seats, and priority support. I can walk you through the current cost and billing cycle." },
+        { "role": "user", "text": "What would the prorated difference be if I upgrade today?" },
+        { "role": "agent", "text": "Since your current billing date is in 12 days, the prorated charge will be calculated for the remaining period. I can estimate around $21.40 for the remainder of the cycle, and the full plan cost would then apply on the next renewal date." },
+        { "role": "user", "text": "That sounds fair. Please upgrade me." },
+        { "role": "agent", "text": "Done. I’ve upgraded your plan and you’ll receive an invoice summary with the prorated charge in the next few minutes." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Customer upgraded from Pro to Premium plan.",
+        "next_action": "Send invoice confirmation and welcome email."
+      }
+    },
+    {
+      "conversation_id": "CS-1010",
+      "customer": {
+        "customer_id": "CUST-1010",
+        "segment": "returning_customer",
+        "country": "IN"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "billing",
+      "intent": "payment_failed",
+      "sentiment": "concerned",
+      "tags": ["payment", "declined", "card"],
+      "messages": [
+        { "role": "user", "text": "My card keeps being declined when I try to renew my plan." },
+        { "role": "agent", "text": "I’m sorry about that. I can help diagnose the issue. What error do you see from the payment gateway?" },
+        { "role": "user", "text": "It says 'transaction not authorized' and my bank says no charge has been taken." },
+        { "role": "agent", "text": "That usually means the card issuer is blocking the payment. Please make sure the billing ZIP code matches the card’s address and try a different card or payment method. I can also help update the billing details if needed." },
+        { "role": "user", "text": "The ZIP is correct but my card is still blocked." },
+        { "role": "agent", "text": "I’ve noted this as a potential issuer block. I recommend contacting your bank and then retrying the payment. I’ve also placed a temporary extension on your plan to avoid immediate service interruption." },
+        { "role": "user", "text": "Thanks, that helps." },
+        { "role": "agent", "text": "You’re welcome. We’ll keep your account active while you complete the payment update." }
+      ],
+      "resolution": {
+        "status": "pending",
+        "summary": "Payment decline likely due to card issuer block; service protection extended.",
+        "next_action": "Customer to contact bank and retry with alternate payment method."
+      }
+    },
+    {
+      "conversation_id": "CS-1011",
+      "customer": {
+        "customer_id": "CUST-1011",
+        "segment": "new_customer",
+        "country": "US"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "order_tracking",
+      "intent": "order_tracking",
+      "sentiment": "neutral",
+      "tags": ["tracking", "delivery", "address"],
+      "messages": [
+        { "role": "user", "text": "Can you tell me where my package is? My tracking number is 1Z5R9A7X." },
+        { "role": "agent", "text": "Certainly. I’ve checked the tracking and the package is currently at the local distribution center in Denver. It is scheduled for delivery tomorrow by 5:00 PM." },
+        { "role": "user", "text": "Is there a way to redirect it to a neighbor or another address?" },
+        { "role": "agent", "text": "Yes, if the package hasn’t been handed off for delivery yet, you can use the carrier’s delivery management page to reroute it. If it’s already out for delivery, a local pickup may be the available option." },
+        { "role": "user", "text": "Thanks, I’ll check that." },
+        { "role": "agent", "text": "You’re welcome. If the delivery changes or fails, let me know and I can help escalate it with the carrier." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Order is on time and scheduled for tomorrow delivery.",
+        "next_action": "No action needed unless delivery status changes."
+      }
+    },
+    {
+      "conversation_id": "CS-1012",
+      "customer": {
+        "customer_id": "CUST-1012",
+        "segment": "returning_customer",
+        "country": "ES"
+      },
+      "channel": "email",
+      "priority": "low",
+      "category": "warranty_claim",
+      "intent": "warranty_claim",
+      "sentiment": "neutral",
+      "tags": ["warranty", "repair", "device"],
+      "messages": [
+        { "role": "user", "text": "My laptop stopped charging after 8 months. Is it still under warranty?" },
+        { "role": "agent", "text": "I’m happy to check that for you. Please share the purchase date and the order number, and I’ll verify the warranty coverage." },
+        { "role": "user", "text": "Order is ORD-11921, purchased on 2025-12-04." },
+        { "role": "agent", "text": "Thank you. The device is covered by our 12-month limited warranty, so you are still within coverage. I’ve initiated a warranty claim and you can print the prepaid shipping label that was emailed to you." },
+        { "role": "user", "text": "Do I need to send the charger too?" },
+        { "role": "agent", "text": "Only the laptop is required unless the charger is also damaged. If you want, I can help schedule a pickup or provide courier instructions." },
+        { "role": "user", "text": "Please schedule the pickup." },
+        { "role": "agent", "text": "Done. A courier has been scheduled for tomorrow morning." }
+      ],
+      "resolution": {
+        "status": "pending",
+        "summary": "Warranty claim approved and courier scheduled.",
+        "next_action": "Await device inspection and repair or replacement."
+      }
+    },
+    {
+      "conversation_id": "CS-1013",
+      "customer": {
+        "customer_id": "CUST-1013",
+        "segment": "returning_customer",
+        "country": "BR"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "account_access",
+      "intent": "account_verification",
+      "sentiment": "concerned",
+      "tags": ["verification", "security", "identity"],
+      "messages": [
+        { "role": "user", "text": "I’m locked out of my account after a security update and I need verification to continue." },
+        { "role": "agent", "text": "I can help with that. For security reasons, I need to verify your identity with the email on file and the last four digits of the payment method or a recent order number." },
+        { "role": "user", "text": "My email is tiago@verde.com and my last order was ORD-7128." },
+        { "role": "agent", "text": "Thank you. I’ve verified the account and unlocked it. I’ve also sent a fresh security code to your email and recommended enabling two-factor authentication." },
+        { "role": "user", "text": "Could you explain how to enable that?" },
+        { "role": "agent", "text": "Of course. Open your account settings, select Security, then choose Two-Factor Authentication. You can enable it with an authenticator app or email code." },
+        { "role": "user", "text": "Thank you. I’m setting it up now." },
+        { "role": "agent", "text": "I’m glad to help. Please keep the recovery email updated to avoid future issues." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Account verified and security steps enabled.",
+        "next_action": "Enable two-factor authentication and maintain backup email."
+      }
+    },
+    {
+      "conversation_id": "CS-1014",
+      "customer": {
+        "customer_id": "CUST-1014",
+        "segment": "new_customer",
+        "country": "US"
+      },
+      "channel": "chat",
+      "priority": "low",
+      "category": "faq",
+      "intent": "policy_question",
+      "sentiment": "neutral",
+      "tags": ["privacy", "data", "policy"],
+      "messages": [
+        { "role": "user", "text": "How long do you keep my data and can I request deletion?" },
+        { "role": "agent", "text": "We retain account and transaction data only as required for legal, billing, and service fulfillment purposes. You can submit a privacy request from the account settings page or from our privacy portal." },
+        { "role": "user", "text": "Does my information get shared with third parties?" },
+        { "role": "agent", "text": "We only share data with trusted service providers necessary to deliver the service or comply with legal requirements, and we never sell personal data. You can review our privacy policy in the footer or from your account settings." },
+        { "role": "user", "text": "Okay, I’ll check the portal." },
+        { "role": "agent", "text": "Please share the privacy request link if you need a reset or if you need a copy of your data in downloadable format." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Privacy policy question answered and request path provided.",
+        "next_action": "Customer can proceed with privacy portal request if needed."
+      }
+    },
+    {
+      "conversation_id": "CS-1015",
+      "customer": {
+        "customer_id": "CUST-1015",
+        "segment": "returning_customer",
+        "country": "MX"
+      },
+      "channel": "chat",
+      "priority": "high",
+      "category": "complaint",
+      "intent": "complaint",
+      "sentiment": "angry",
+      "tags": ["service", "customer_experience", "escalation"],
+      "messages": [
+        { "role": "user", "text": "I’ve called support twice and still haven’t gotten a resolution for my refund." },
+        { "role": "agent", "text": "I’m sorry you’ve had to follow up multiple times. I can review the full status and escalate the case if necessary. Could you share your order number and the last update you received?" },
+        { "role": "user", "text": "Order is ORD-45601 and I was told the refund was approved before but nothing posted." },
+        { "role": "agent", "text": "Thank you. I’ve found the case notes and I can see the refund was formally approved but the payment processor did not complete the transfer. I’m escalating it to the finance team with a priority flag for same-day review and I’ll provide you with a confirmation number." },
+        { "role": "user", "text": "Please do it. I’m losing patience." },
+        { "role": "agent", "text": "I’ve escalated it immediately. You’ll receive a status email within the hour and a follow-up from the finance team by 5 PM local time." }
+      ],
+      "resolution": {
+        "status": "escalated",
+        "summary": "Customer complaint escalated due to unresolved refund delay.",
+        "next_action": "Finance review and direct follow-up within one business hour."
+      }
+    },
+    {
+      "conversation_id": "CS-1016",
+      "customer": {
+        "customer_id": "CUST-1016",
+        "segment": "new_customer",
+        "country": "AU"
+      },
+      "channel": "chat",
+      "priority": "low",
+      "category": "availability_question",
+      "intent": "availability_question",
+      "sentiment": "neutral",
+      "tags": ["stock", "shipping", "preorder"],
+      "messages": [
+        { "role": "user", "text": "Is the Laptop Pro 14 available in white and when would it ship?" },
+        { "role": "agent", "text": "Yes, the Laptop Pro 14 is available in white. It is currently in stock for delivery within 2-4 business days. I can also reserve one for you if you’d like to complete the order." },
+        { "role": "user", "text": "That works. I’ll check out." },
+        { "role": "agent", "text": "Great. If you need help with financing or delivery options, I’m happy to assist." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Product availability confirmed and shipping timeframe provided.",
+        "next_action": "No further action."
+      }
+    },
+    {
+      "conversation_id": "CS-1017",
+      "customer": {
+        "customer_id": "CUST-1017",
+        "segment": "returning_customer",
+        "country": "US"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "shipping",
+      "intent": "delivery_address_change",
+      "sentiment": "concerned",
+      "tags": ["address", "change", "delivery"],
+      "messages": [
+        { "role": "user", "text": "My package is already in transit, but I need to change the delivery address to my office." },
+        { "role": "agent", "text": "I can help. If the carrier has not yet handed it to the local courier for delivery, we may be able to change the address. Please provide the order number and the new address." },
+        { "role": "user", "text": "Order is ORD-23344 and the new address is 250 Market Street, San Francisco, CA." },
+        { "role": "agent", "text": "Thank you. I’ve submitted a reroute request to the shipper. If the package is already out for delivery, I’ll let you know and we can arrange a pickup or local hold instead." },
+        { "role": "user", "text": "What if it’s too late?" },
+        { "role": "agent", "text": "Then I’ll contact the carrier on your behalf and provide the closest available pickup location. I’ll email you with an update shortly." }
+      ],
+      "resolution": {
+        "status": "pending",
+        "summary": "Address change request submitted to carrier; pickup fallback available.",
+        "next_action": "Wait for carrier confirmation and provide pickup location if needed."
+      }
+    },
+    {
+      "conversation_id": "CS-1018",
+      "customer": {
+        "customer_id": "CUST-1018",
+        "segment": "new_customer",
+        "country": "IT"
+      },
+      "channel": "chat",
+      "priority": "low",
+      "category": "greeting",
+      "intent": "greeting",
+      "sentiment": "neutral",
+      "tags": ["hello", "support"],
+      "messages": [
+        { "role": "user", "text": "Hi, I need help choosing the right plan for my family." },
+        { "role": "agent", "text": "Hi! I’d be happy to help. What are you looking for in a plan—more storage, premium support, or family sharing options?" },
+        { "role": "user", "text": "Mostly more storage and simple shared access." },
+        { "role": "agent", "text": "Then the Family Plus plan is a strong option. It includes shared storage, priority support, and multi-device access. I can also compare it with the Standard plan for a quick decision." },
+        { "role": "user", "text": "Can you compare those two?" },
+        { "role": "agent", "text": "Certainly. The Standard plan is good for individuals, while Family Plus supports 5 users and adds shared folder controls. If you’d like, I can also help you with billing details." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Customer received recommendation and comparison for plan selection.",
+        "next_action": "Customer can decide based on features and pricing."
+      }
+    },
+    {
+      "conversation_id": "CS-1019",
+      "customer": {
+        "customer_id": "CUST-1019",
+        "segment": "returning_customer",
+        "country": "US"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "subscription_cancel",
+      "intent": "subscription_cancel",
+      "sentiment": "neutral",
+      "tags": ["cancel", "account", "plan"],
+      "messages": [
+        { "role": "user", "text": "I want to cancel my monthly plan but I’d like to keep my data for next month." },
+        { "role": "agent", "text": "I can help with that. Your cancellation can be scheduled at the end of the current billing cycle. You can also choose to keep your account active until the renewal date and export your data before then." },
+        { "role": "user", "text": "What happens to my saved documents if I cancel?" },
+        { "role": "agent", "text": "Your data remains available for the current billing period, and you can export it anytime before the cancellation date. After cancellation, data is held for a short retention period according to our policy." },
+        { "role": "user", "text": "Okay, let me do that and cancel after the export." },
+        { "role": "agent", "text": "Perfect. I’ve noted your request and explained the timing. You can complete it from the billing settings page." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Customer informed about cancel-at-cycle-end and data export policy.",
+        "next_action": "Guide user to export data before cancellation date."
+      }
+    },
+    {
+      "conversation_id": "CS-1020",
+      "customer": {
+        "customer_id": "CUST-1020",
+        "segment": "new_customer",
+        "country": "DE"
+      },
+      "channel": "chat",
+      "priority": "low",
+      "category": "feedback",
+      "intent": "feedback",
+      "sentiment": "positive",
+      "tags": ["review", "satisfaction", "support"],
+      "messages": [
+        { "role": "user", "text": "I wanted to say the support team was very helpful and fast." },
+        { "role": "agent", "text": "Thank you for the kind words. I’m glad we could resolve everything smoothly for you. Is there anything specific you appreciated about the experience?" },
+        { "role": "user", "text": "The agent explained my options clearly and solved the problem without pushing a sale." },
+        { "role": "agent", "text": "That’s exactly the experience we aim for. I’ll share your feedback with the team and we’ll keep building on it." },
+        { "role": "user", "text": "Thanks again." },
+        { "role": "agent", "text": "You’re very welcome. We appreciate your trust and support." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Positive feedback captured and shared with support leadership.",
+        "next_action": "No corrective action required."
+      }
+    },
+    {
+      "conversation_id": "CS-1021",
+      "customer": {
+        "customer_id": "CUST-1021",
+        "segment": "returning_customer",
+        "country": "CA"
+      },
+      "channel": "chat",
+      "priority": "high",
+      "category": "escalation",
+      "intent": "escalation",
+      "sentiment": "frustrated",
+      "tags": ["urgent", "manager", "priority"],
+      "messages": [
+        { "role": "user", "text": "I need a manager to review my case. My replacement order still hasn’t been delivered." },
+        { "role": "agent", "text": "I’m sorry about the delay. I can escalate this to a supervisor immediately and provide an update on the order status. Please share the order number." },
+        { "role": "user", "text": "Order is ORD-90002." },
+        { "role": "agent", "text": "Thank you. I’ve flagged the case as high priority and a supervisor will review the carrier timeline and replacement dispatch. You’ll receive a direct follow-up within the next hour." },
+        { "role": "user", "text": "Okay. Please make sure they can see the last carrier update." },
+        { "role": "agent", "text": "I’ve attached the entire case history to the escalation notes so the manager can review the timeline without delay." }
+      ],
+      "resolution": {
+        "status": "escalated",
+        "summary": "Urgent replacement-delivery issue escalated to supervisor.",
+        "next_action": "Supervisor review and direct customer update within one hour."
+      }
+    },
+    {
+      "conversation_id": "CS-1022",
+      "customer": {
+        "customer_id": "CUST-1022",
+        "segment": "new_customer",
+        "country": "US"
+      },
+      "channel": "chat",
+      "priority": "low",
+      "category": "product_question",
+      "intent": "product_question",
+      "sentiment": "neutral",
+      "tags": ["specs", "battery", "laptop"],
+      "messages": [
+        { "role": "user", "text": "How long does the Laptop Pro 14 battery last on a full charge?" },
+        { "role": "agent", "text": "It lasts up to 12 hours under standard productivity workloads, such as web browsing and office apps. Battery life can vary with brightness, video playback, and background services." },
+        { "role": "user", "text": "Does it support fast charging?" },
+        { "role": "agent", "text": "Yes. It supports fast charging and can reach about 60% in 45 minutes using the included adapter." },
+        { "role": "user", "text": "Great, that helps a lot." },
+        { "role": "agent", "text": "I’m glad. If you want, I can also compare it with the Ultralight model." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Battery life and fast charging details provided.",
+        "next_action": "No further action."
+      }
+    },
+    {
+      "conversation_id": "CS-1023",
+      "customer": {
+        "customer_id": "CUST-1023",
+        "segment": "returning_customer",
+        "country": "NL"
+      },
+      "channel": "chat",
+      "priority": "low",
+      "category": "exchange_request",
+      "intent": "exchange_request",
+      "sentiment": "neutral",
+      "tags": ["exchange", "size", "clothing"],
+      "messages": [
+        { "role": "user", "text": "I ordered the wrong size and need an exchange." },
+        { "role": "agent", "text": "I can help with that. Please share the order number and the size you want instead, and I’ll check whether the replacement is in stock." },
+        { "role": "user", "text": "Order is ORD-8841 and I need a medium instead of a small." },
+        { "role": "agent", "text": "Thank you. The medium is in stock. I’ve approved the exchange and a prepaid return label has been emailed to you. Your new item will ship once we receive the original item back." },
+        { "role": "user", "text": "Perfect. Thank you." },
+        { "role": "agent", "text": "You’re welcome. I’ve noted the exchange and confirmation details in your case." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Size exchange approved and prepaid return label sent.",
+        "next_action": "Customer to ship original item back and await replacement."
+      }
+    },
+    {
+      "conversation_id": "CS-1024",
+      "customer": {
+        "customer_id": "CUST-1024",
+        "segment": "new_customer",
+        "country": "SG"
+      },
+      "channel": "chat",
+      "priority": "medium",
+      "category": "appointment_booking",
+      "intent": "appointment_booking",
+      "sentiment": "interested",
+      "tags": ["appointment", "consultation", "setup"],
+      "messages": [
+        { "role": "user", "text": "I’d like to book a 30-minute setup consultation for my new hardware." },
+        { "role": "agent", "text": "Absolutely. We have availability this Thursday and Friday afternoon. Which slot works best for you?" },
+        { "role": "user", "text": "Thursday at 2:30 PM works best." },
+        { "role": "agent", "text": "Perfect. I’ve reserved a setup consultation for Thursday at 2:30 PM. You’ll receive a confirmation email with the calendar invite and any prep instructions." },
+        { "role": "user", "text": "Great, thank you." },
+        { "role": "agent", "text": "You’re welcome. We look forward to helping you get set up." }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "summary": "Setup consultation booked successfully.",
+        "next_action": "Send confirmation email and prep checklist."
+      }
+    }
+  ],
+  "metadata": {
+    "total_conversations": 24,
+    "categories": [
+      "account_access",
+      "billing",
+      "shipping",
+      "product_question",
+      "return_request",
+      "setup_help",
+      "technical_issue",
+      "business_inquiry",
+      "subscription",
+      "order_tracking",
+      "warranty_claim",
+      "complaint",
+      "availability_question",
+      "delivery_address_change",
+      "greeting",
+      "subscription_cancel",
+      "feedback",
+      "escalation",
+      "exchange_request",
+      "appointment_booking"
+    ],
+    "avg_turns_per_conversation": 8,
+    "split": {
+      "train": 15,
+      "validation": 5,
+      "test": 4
+    }
+  }
+}
