@@ -6,6 +6,16 @@ const promptButtons = document.querySelectorAll('.prompt-btn');
 const sessionList = document.getElementById('sessionList');
 let activeSessionId = null;
 
+const accountRoot = document.querySelector('.account-actions');
+if (window.React && window.ReactDOM && accountRoot) {
+  const accountName = accountRoot.querySelector('.status-pill').textContent.trim();
+  const AccountActions = () => React.createElement(React.Fragment, null,
+    React.createElement('span', { className: 'status-pill' }, accountName),
+    React.createElement('button', { id: 'logoutBtn', className: 'logout-btn', type: 'button' }, 'Sign out')
+  );
+  ReactDOM.createRoot(accountRoot).render(React.createElement(AccountActions));
+}
+
 function addMessage(role, text, metadata = null) {
   const messageEl = document.createElement('div');
   messageEl.className = `message ${role}`;

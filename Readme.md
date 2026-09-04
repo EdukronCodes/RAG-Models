@@ -23,3 +23,19 @@ The chat API requires authentication and accepts `message`, `model`, and an
 optional `session_id`. Session management is available through
 `/api/sessions` and `/api/sessions/<id>`.
 
+### Architecture and observability
+
+- `backend/rag_strategies/` contains one strategy implementation per RAG type.
+- `backend/rag_pipeline.py` runs retrieval and generation as a LangGraph graph
+	using LangChain `RunnableLambda` nodes.
+- `backend/observability.py` emits JSON request/RAG events with request IDs.
+	Counters are available at `/metrics`; health is available at `/health`.
+- The browser workspace uses React 18 for the account control and standard
+	HTML/CSS/JavaScript for the chat surface, keeping the page lightweight.
+
+For production, use `gunicorn --bind 0.0.0.0:5000 app:app`, set a strong
+`FLASK_SECRET_KEY`, and put the service behind HTTPS and a reverse proxy. For
+larger deployments, move SQLite to PostgreSQL and send structured logs to an
+OpenTelemetry-compatible collector or LangSmith by configuring a LangChain
+tracing environment.
+
