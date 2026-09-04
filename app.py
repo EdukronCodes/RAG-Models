@@ -4,6 +4,7 @@ import os
 from flask import Flask, g, jsonify, redirect, render_template, request, session, url_for
 
 from backend.auth import AuthStore, load_user, login_required
+from backend.observability import configure_observability, metrics_snapshot
 from backend.rag_engine import SupportRAGEngine
 
 app = Flask(__name__)
@@ -11,6 +12,7 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-change-this-secret
 app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax")
 store = AuthStore()
 engine = SupportRAGEngine()
+configure_observability(app)
 
 MODEL_OPTIONS = [
     "naive_rag",
@@ -104,7 +106,12 @@ def delete_chat_session(chat_id):
 
 @app.route("/health")
 def health():
-    return jsonify({"status": "ok", "service": "multi-rag-chatbot", "models": MODEL_OPTIONS})
+    return jsonify({"status": "ok", "service": "multi-rag-chatbot", "models": MODEL_OPTIONS, "langgraph": engine.pipeline.graph is not None})
+
+
+@app.get("/metrics")
+def metrics():
+    return jsonify(metrics_snapshot())
 
 
 @app.route("/api/chat", methods=["POST"])

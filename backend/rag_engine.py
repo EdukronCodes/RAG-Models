@@ -4,6 +4,7 @@ import re
 from collections import defaultdict
 
 from backend.rag_strategies import STRATEGIES
+from backend.rag_pipeline import RAGPipeline
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATASET_PATH = os.path.join(ROOT_DIR, "customer_support_dataset.json")
@@ -21,6 +22,7 @@ class SupportRAGEngine:
     def __init__(self):
         self.documents = self._load_documents()
         self.graph = self._build_graph()
+        self.pipeline = RAGPipeline(self)
 
     def _load_documents(self):
         docs = []
@@ -197,8 +199,7 @@ class SupportRAGEngine:
         }:
             strategy = "naive_rag"
 
-        top_results = self._retrieve(query, strategy)
-        payload = self._build_answer(query, top_results, strategy)
+        payload = self.pipeline.invoke(query, strategy)
         payload["model"] = strategy
         payload["query"] = query
         return payload
