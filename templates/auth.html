@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ 'Create account' if mode == 'register' else 'Sign in' }} | Support Desk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body class="auth-page">
+    <main class="auth-card">
+      <p class="eyebrow">Support desk</p>
+      <h1>{{ 'Create your account' if mode == 'register' else 'Welcome back' }}</h1>
+      <p class="auth-copy">{{ 'Save support conversations and return to them anytime.' if mode == 'register' else 'Sign in to continue to your support workspace.' }}</p>
+      <form id="authForm" data-mode="{{ mode }}">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" required minlength="3" />
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" required minlength="8" />
+        <button type="submit">{{ 'Create account' if mode == 'register' else 'Sign in' }}</button>
+        <p id="authError" class="error-text"></p>
+      </form>
+      <a class="auth-link" href="{{ url_for('login' if mode == 'register' else 'register') }}">{{ 'Already have an account? Sign in' if mode == 'register' else 'Need an account? Register' }}</a>
+    </main>
+    <script>
+      document.getElementById('authForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const response = await fetch('/' + form.dataset.mode, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+        const data = await response.json();
+        if (response.ok) window.location.href = '/';
+        else document.getElementById('authError').textContent = data.error || 'Unable to continue.';
+      });
+    </script>
+  </body>
+</html>

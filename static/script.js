@@ -3,6 +3,8 @@ const userInput = document.getElementById('userInput');
 const chatForm = document.getElementById('chatForm');
 const chatWindow = document.getElementById('chatWindow');
 const promptButtons = document.querySelectorAll('.prompt-btn');
+const sessionList = document.getElementById('sessionList');
+let activeSessionId = null;
 
 function addMessage(role, text, metadata = null) {
   const messageEl = document.createElement('div');
@@ -40,7 +42,7 @@ async function sendRequest() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message: query, model }),
+      body: JSON.stringify({ message: query, model, session_id: activeSessionId }),
     });
 
     const data = await response.json();
@@ -51,6 +53,7 @@ async function sendRequest() {
     }
 
     const safeAnswer = data.answer || 'No answer returned.';
+    activeSessionId = data.session_id;
     const sourceNames = (data.sources || []).map(item => item.title).slice(0, 3).join(', ') || 'none';
     addMessage('assistant', safeAnswer, {
       model: data.model,
@@ -62,9 +65,57 @@ async function sendRequest() {
   }
 }
 
+async function loadSessions() {
+  const response = await fetch('/api/sessions');
+  if (!response.ok) return;
+  const data = await response.json();
+  sessionList.innerHTML = '';
+  data.sessions.forEach((item) => {
+    const row = document.createElement('div');
+    row.className = `session-row ${item.id === activeSessionId ? 'active' : ''}`;
+    row.innerHTML = `<button class="session-btn" data-id="${item.id}">${item.title}</button><button class="delete-session" data-id="${item.id}" aria-label="Delete session">×</button>`;
+    sessionList.appendChild(row);
+  });
+  document.querySelectorAll('.session-btn').forEach((button) => button.addEventListener('click', () => openSession(button.dataset.id)));
+  document.querySelectorAll('.delete-session').forEach((button) => button.addEventListener('click', () => deleteSession(button.dataset.id)));
+}
+
+async function openSession(id) {
+  const response = await fetch(`/api/sessions/${id}`);
+  const data = await response.json();
+  if (!response.ok) return;
+  activeSessionId = Number(id);
+  chatWindow.innerHTML = '';
+  data.messages.forEach((message) => addMessage(message.role, message.content));
+  loadSessions();
+}
+
+async function deleteSession(id) {
+  await fetch(`/api/sessions/${id}`, { method: 'DELETE' });
+  if (Number(id) === activeSessionId) {
+    activeSessionId = null;
+    chatWindow.innerHTML = '';
+  }
+  loadSessions();
+}
+
 chatForm.addEventListener('submit', (event) => {
   event.preventDefault();
   sendRequest();
+});
+
+document.getElementById('newSessionBtn').addEventListener('click', async () => {
+  const response = await fetch('/api/sessions', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({}) });
+  const data = await response.json();
+  activeSessionId = data.session.id;
+  chatWindow.innerHTML = '';
+  addMessage('assistant', 'New support session ready. What can I help with?');
+  loadSessions();
+});
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  await fetch('/logout', { method: 'POST' });
+  window.location.href = '/login';
 });
 
 promptButtons.forEach((button) => {
@@ -73,3 +124,5 @@ promptButtons.forEach((button) => {
     userInput.focus();
   });
 });
+
+loadSessions();

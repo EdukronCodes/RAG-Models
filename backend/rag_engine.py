@@ -3,6 +3,8 @@ import os
 import re
 from collections import defaultdict
 
+from backend.rag_strategies import STRATEGIES
+
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATASET_PATH = os.path.join(ROOT_DIR, "customer_support_dataset.json")
 FAQ_PATH = os.path.join(ROOT_DIR, "datasets", "customer_support", "customer_support_faq.json")
@@ -112,7 +114,10 @@ class SupportRAGEngine:
                 graph[category].add(token)
         return dict(graph)
 
-    def _keyword_score(self, query_terms, doc_text):
+    def normalize(self, text):
+        return normalize_text(text)
+
+    def keyword_score(self, query_terms, doc_text):
         doc_terms = set(normalize_text(doc_text).split())
         matches = 0
         for term in query_terms:
@@ -125,39 +130,10 @@ class SupportRAGEngine:
         normalized_query = normalize_text(query)
         query_terms = set(normalized_query.split())
         scored = []
+        strategy_impl = STRATEGIES[strategy]
 
         for doc in self.documents:
-            doc_text = normalize_text(doc["search_text"])
-            score = self._keyword_score(query_terms, doc_text)
-
-            if strategy == "advanced_rag":
-                if doc["category"] in normalized_query:
-                    score += 0.25
-                score += 0.1 * len(set(query_terms) & set(normalize_text(doc["category"]).split()))
-            elif strategy == "corrective_rag":
-                score += 0.15 if doc["source"] == "faq" else 0.05
-                if not query_terms.intersection(set(doc_text.split())):
-                    score -= 0.4
-            elif strategy == "agent_rag":
-                score += 0.2 if doc["source"] == "faq" else 0.1
-                if any(item in normalized_query for item in ["refund", "billing", "order", "password", "shipping"]):
-                    score += 0.15 if item in normalized_query else 0.0
-            elif strategy == "adaptive_rag":
-                if len(query_terms) <= 3:
-                    score += 0.2
-                else:
-                    score += 0.1
-            elif strategy == "graph_rag":
-                connected = self.graph.get(doc["category"], set())
-                score += 0.18 if any(term in connected for term in query_terms) else 0.0
-            elif strategy == "hybrid_rag":
-                score += 0.12 * len(query_terms.intersection(set(doc["tags"])))
-            elif strategy == "multimodal_rag":
-                score += 0.10 if "image" in normalized_query or "visual" in normalized_query or "screen" in normalized_query else 0.0
-                score += 0.08 if doc["source"] == "conversation" else 0.0
-            else:
-                # naive rag baseline
-                score += 0.05 if doc["source"] == "faq" else 0.0
+            score = strategy_impl.score(self, query_terms, normalized_query, doc)
 
             if score > 0:
                 scored.append({"score": round(score, 4), "doc": doc})
@@ -173,24 +149,7 @@ class SupportRAGEngine:
         primary = top_results[0]["doc"]
         support_text = primary["answer"]
 
-        if strategy == "naive_rag":
-            explanation = "I used direct keyword matching across the support knowledge base to find the closest answer."
-        elif strategy == "advanced_rag":
-            explanation = "I used category-aware ranking and weighted query matching to improve the result quality."
-        elif strategy == "corrective_rag":
-            explanation = "I filtered weak or low-confidence matches and kept the most relevant evidence."
-        elif strategy == "agent_rag":
-            explanation = "I decomposed the request into issue and context signals before retrieving the best support answer."
-        elif strategy == "adaptive_rag":
-            explanation = "I adjusted retrieval depth based on how complex the issue appears to be."
-        elif strategy == "graph_rag":
-            explanation = "I used linked support concepts and related categories to improve retrieval context."
-        elif strategy == "hybrid_rag":
-            explanation = "I combined keyword similarity with contextual support metadata to improve ranking."
-        elif strategy == "multimodal_rag":
-            explanation = "I combined textual retrieval with multimodal context cues and support examples for richer grounding."
-        else:
-            explanation = "I matched the request to the most relevant support context available."
+        explanation = STRATEGIES[strategy].explanation()
 
         if len(top_results) > 1:
             secondary = top_results[1]["doc"]["answer"]

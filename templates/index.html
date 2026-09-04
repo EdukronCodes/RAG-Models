@@ -13,7 +13,7 @@
           <p class="eyebrow">RAG demo</p>
           <h1>Customer Support Chatbot</h1>
         </div>
-        <div class="status-pill">Flask Backend</div>
+        <div class="account-actions"><span class="status-pill">{{ user.username }}</span><button id="logoutBtn" class="logout-btn" type="button">Sign out</button></div>
       </header>
 
       <main class="layout">
@@ -33,6 +33,10 @@
             <button class="prompt-btn" data-prompt="I need to return a damaged coffee machine and want a refund.">Return request</button>
             <button class="prompt-btn" data-prompt="I want to upgrade from Pro to Premium for my team.">Subscription upgrade</button>
             <button class="prompt-btn" data-prompt="I need help with enterprise onboarding for 300 employees.">Business inquiry</button>
+          </div>
+          <div class="session-list">
+            <div class="section-heading"><h3>Saved sessions</h3><button id="newSessionBtn" class="small-btn" type="button">New</button></div>
+            <div id="sessionList"></div>
           </div>
         </aside>
 
