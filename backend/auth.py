@@ -21,6 +21,7 @@ class AuthStore:
         self.database_path = database_path
         os.makedirs(os.path.dirname(database_path), exist_ok=True)
         self._initialize()
+        self._ensure_default_user()
 
     def connect(self):
         connection = sqlite3.connect(self.database_path)
@@ -65,6 +66,16 @@ class AuthStore:
                 CREATE INDEX IF NOT EXISTS idx_messages_chat ON messages(chat_session_id);
                 """
             )
+
+    def _ensure_default_user(self):
+        username = os.environ.get("DEFAULT_USERNAME", "admin")
+        password = os.environ.get("DEFAULT_PASSWORD", "admin1234")
+        if not username or not password:
+            return
+        with self.connect() as connection:
+            exists = connection.execute("SELECT 1 FROM users LIMIT 1").fetchone()
+        if not exists:
+            self.create_user(username, password)
 
     def create_user(self, username, password):
         username = username.strip()
